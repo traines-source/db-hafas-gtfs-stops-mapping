@@ -32,10 +32,12 @@ docker run --rm -it $DOCKER_EXTRA_FLAGS \
     -v ${DATA_DIR_STORE}:/usr/src/app/data \
     -v ${DATA_DIR_WORKING}:/usr/src/app/out \
     mfdz/gtfs-osm-stops-matcher sqlite3 out/stops.db \
-'DROP TABLE IF EXISTS station_mapping;' 'CREATE TABLE station_mapping AS SELECT ifopt_id, osm_id AS ibnr, rating, f.name FROM matches JOIN fptf_stops f;' \
+'DROP TABLE IF EXISTS station_mapping;' \
+'CREATE TABLE station_mapping AS SELECT m.ifopt_id, m.osm_id AS ibnr, ROUND(m.rating, 2) AS rating, h.Haltestelle_lang AS delfi_name, f.name AS db_name FROM matches m JOIN fptf_stops f ON m.osm_id = f.ibnr JOIN haltestellen_unified h ON m.ifopt_id = h.globaleid;' \
 '.output /usr/src/app/data/hafas-delfi-gtfs-stations-mapping.sql' '.dump station_mapping' \
-'.headers on' '.mode csv' '.output /usr/src/app/data/hafas-delfi-gtfs-stations-mapping.csv' '.dump station_mapping' \
+'.headers on' '.mode csv' '.output /usr/src/app/data/hafas-delfi-gtfs-stations-mapping.csv' 'select * from station_mapping;' \
 '.quit'
+
 
 echo "Done."
 

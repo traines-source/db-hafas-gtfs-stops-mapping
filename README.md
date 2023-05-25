@@ -4,7 +4,7 @@ This project aims to match DB-HAFAS-IDs to DELFI-GTFS-IDs for all train and bus/
 
 ## Terminology
 
-__DB-HAFAS-IDs__ are the stop/station ids used by the DB-run HAFAS system. Other HAFAS instances most likely use different IDs. Depending on the context DB-HAFAS-IDs might also be called:
+__DB-HAFAS-IDs__ are the stop/station ids used by the HAFAS system run by Deutsche Bahn. Other HAFAS instances most likely use different IDs. Depending on the context DB-HAFAS-IDs might also be called:
 
 * EVA number. Usually only for DB/German train stations. See e.g. [here](https://data.deutschebahn.com/dataset/data-haltestellen.html)
 * [IBNR](https://de.wikipedia.org/wiki/Interne_Bahnhofsnummer). Usually only for DB/German train stations.
@@ -42,7 +42,7 @@ But, there is a difference between the IDs used in the GTFS dataset and the ZHV 
 
 ## Procedure
 
-* Enrich [db-hafas-stations](https://github.com/derhuerst/db-hafas-stations) with additional stations and calling lines from [public-transport-statistics](https://github.com/traines-source/public-transport-statistics) and the known, manually assigned station-level IFOPT-IDs from the official [Official DB Haltestellendaten](https://data.deutschebahn.com/dataset/data-haltestellen.html). (Result below)
+* Enrich [db-hafas-stations](https://github.com/derhuerst/db-hafas-stations) with additional stations and calling lines from [public-transport-statistics](https://github.com/traines-source/public-transport-statistics) and the known, manually assigned station-level IFOPT-IDs from the official [DB Haltestellendaten](https://data.deutschebahn.com/dataset/data-haltestellen.html). (Download result below)
 * Use an [adapted version](https://github.com/traines-source/nvbw-osm-stop-comparison) of [nvbw-osm-stop-comparison](https://github.com/mfdz/nvbw-osm-stop-comparison) to match DELFI-GTFS-IDS (and optionally ZHV stations) with the DB-HAFAS-stations (instead of OSM stations):
     * If only trains are calling at a given DELFI-GTFS-station/quay, and there exists a DB-HAFAS-station with a manually assigned IFOPT-ID being a prefix of the DELFI-GTFS-ID, then it is very likely a match
     * If things other than trains are calling at the station, it is most likely a bus/tram station that has a completely different DB-HAFAS-ID, i.e. it should not be matched even if the IFOPT-ID-prefixes match!
@@ -53,15 +53,15 @@ But, there is a difference between the IDs used in the GTFS dataset and the ZHV 
 If you want to match against ZHV-IDs instead of DELFI-GTFS-IDs, adjust the `-p` flag of the nvbw-osm-stop-comparison script from `GTFS` to `DELFI` and indicate the ZHV CSV source file using `-s` (see README). Beware that this will have an impact on the quality of the mapping.
 
 ## Results
-* (Incomplete, best-effort) mapping between DB-HAFAS-IDs and DELFI-GTFS-IDs for all bus/tram/train/etc. stops/stations in Germany, including match rating, as SQL: __[hafas-delfi-gtfs-stations-mapping.sql](https://mirror.traines.eu/hafas-ibnr-zhv-gtfs-osm-matching/hafas-delfi-gtfs-stations-mapping.sql)__
+* (Incomplete, error-prone, best-effort) mapping between DB-HAFAS-IDs and DELFI-GTFS-IDs for all bus/tram/train/etc. stops/stations in Germany, including match rating and names, as SQL: __[hafas-delfi-gtfs-stations-mapping.sql](https://mirror.traines.eu/hafas-ibnr-zhv-gtfs-osm-matching/hafas-delfi-gtfs-stations-mapping.sql)__
 * Same mapping as CSV: __[hafas-delfi-gtfs-stations-mapping.csv](https://mirror.traines.eu/hafas-ibnr-zhv-gtfs-osm-matching/hafas-delfi-gtfs-stations-mapping.csv)__
 * Containing mappings for ~481000 DELFI-GTFS-IDs and ~258000 DB-HAFAS-IDs (and remember, it's a n:m mapping).
 * There are currently ~8000 out of 489000 DELFI-GTFS-IDs not matched, mostly due to wrong coordinates and other issues
 * There are currently ~100 out of 6500 train stations not matched, mostly because they are not contained in DELFI-GTFS
-* (Incomplete) list of ~310000 DB-HAFAS stations including station-level IFOPT-IDs from [Official DB Haltestellendaten](https://data.deutschebahn.com/dataset/data-haltestellen.html) and (very incomplete) list of calling lines as [fptf](https://github.com/public-transport/friendly-public-transport-format)-[ndjson](http://ndjson.org/): __[hafas-stations.ndjson](https://mirror.traines.eu/hafas-ibnr-zhv-gtfs-osm-matching/hafas-stations.ndjson)__
+* (Incomplete) list of ~310000 DB-HAFAS stations including station-level IFOPT-IDs from [DB Haltestellendaten](https://data.deutschebahn.com/dataset/data-haltestellen.html) and (very incomplete) list of calling lines as [fptf](https://github.com/public-transport/friendly-public-transport-format)-[ndjson](http://ndjson.org/): __[hafas-stations.ndjson](https://mirror.traines.eu/hafas-ibnr-zhv-gtfs-osm-matching/hafas-stations.ndjson)__
 * More source files: https://mirror.traines.eu/hafas-ibnr-zhv-gtfs-osm-matching/ and https://mirror.traines.eu/german-gtfs/delfi/
 
-In order to obtain top-level IFOPT-IDs from quay-level ones (including quirks like `_G`), you might use a regex like that: `s/^([^:_]+:[^:_]+:[^:_]+)(_[^:]+)?(:.+)?$/\1/`. Beware, as stated above, that this will result in a fuzzy mapping, even more so than before.
+In order to obtain top-level IFOPT-IDs from quay-level ones (including removing quirks like `_G`), you might use a regex like that: `s/^([^:_]+:[^:_]+:[^:_]+)(_[^:]+)?(:.+)?$/\1/`. Beware, as stated above, that this will result in a fuzzy mapping, even more so than before.
 
 ## Related work
 
