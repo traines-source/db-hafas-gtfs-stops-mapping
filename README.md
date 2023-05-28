@@ -26,7 +26,7 @@ But, there is a difference between the IDs used in the GTFS dataset and the ZHV 
 * ([ZHV stations](https://zhv.wvigmbh.de/))
 * ([OSM](http://download.geofabrik.de/), [ODbL](https://www.openstreetmap.org/copyright), for uic_ref/ref:IBNR-tagged stations and name matching)
 * [db-hafas-stations](https://github.com/derhuerst/db-hafas-stations), a collection of about 300k stations from DB-HAFAS, some of which outside of Germany
-* additional HAFAS stations not contained in db-hafas-stations obtained as a byproduct of [public-transport-statistics](https://github.com/traines-source/public-transport-statistics), currently about 10k
+* additional DB-HAFAS stations not contained in db-hafas-stations obtained as a byproduct of [public-transport-statistics](https://github.com/traines-source/public-transport-statistics), currently about 10k
 
 ## Some insights
 
@@ -54,10 +54,10 @@ If you want to match against ZHV-IDs instead of DELFI-GTFS-IDs, adjust the `-p` 
 
 ## Results
 * (Incomplete, error-prone, best-effort) mapping between DB-HAFAS-IDs and DELFI-GTFS-IDs for all bus/tram/train/etc. stops/stations in Germany, including match rating and names, as SQL: __[hafas-delfi-gtfs-stations-mapping.sql](https://mirror.traines.eu/hafas-ibnr-zhv-gtfs-osm-matching/hafas-delfi-gtfs-stations-mapping.sql)__
-* Same mapping as CSV: __[hafas-delfi-gtfs-stations-mapping.csv](https://mirror.traines.eu/hafas-ibnr-zhv-gtfs-osm-matching/hafas-delfi-gtfs-stations-mapping.csv)__
-* Containing mappings for ~481000 DELFI-GTFS-IDs and ~258000 DB-HAFAS-IDs (and remember, it's a n:m mapping).
-* There are currently ~8000 out of 489000 DELFI-GTFS-IDs not matched, mostly due to wrong coordinates and other issues
-* There are currently ~100 out of 6500 train stations not matched, mostly because they are not contained in DELFI-GTFS
+    * Same mapping as CSV: __[hafas-delfi-gtfs-stations-mapping.csv](https://mirror.traines.eu/hafas-ibnr-zhv-gtfs-osm-matching/hafas-delfi-gtfs-stations-mapping.csv)__
+    * Containing mappings for ~481000 DELFI-GTFS-IDs and ~258000 DB-HAFAS-IDs (and remember, it's a n:m mapping).
+    * There are currently ~8000 out of 489000 DELFI-GTFS-IDs not matched, mostly due to wrong coordinates and other issues
+    * There are currently ~100 out of 6500 train stations not matched, mostly because they are not contained in DELFI-GTFS
 * (Incomplete) list of ~310000 DB-HAFAS stations including station-level IFOPT-IDs from [DB Haltestellendaten](https://data.deutschebahn.com/dataset/data-haltestellen.html) and (very incomplete) list of calling lines as [fptf](https://github.com/public-transport/friendly-public-transport-format)-[ndjson](http://ndjson.org/): __[hafas-stations.ndjson](https://mirror.traines.eu/hafas-ibnr-zhv-gtfs-osm-matching/hafas-stations.ndjson)__
 * More source files: https://mirror.traines.eu/hafas-ibnr-zhv-gtfs-osm-matching/ and https://mirror.traines.eu/german-gtfs/delfi/
 
