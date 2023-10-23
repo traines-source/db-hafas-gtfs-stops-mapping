@@ -65,5 +65,6 @@ In order to obtain top-level IFOPT-IDs from quay-level ones (including removing 
 
 ## Related work
 
+* [DB RIS::Stations](https://developers.deutschebahn.com/db-api-marketplace/apis/product/ris-stations/api/ris-stations) – API that can also map EVA/HAFAS to IFOPT/DHID keys, also for bus/tram etc. stations.
 * [match-gtfs-rt-to-gtfs](https://github.com/derhuerst/match-gtfs-rt-to-gtfs) – maps HAFAS entities to GTFS entities (primarily lines, departures etc.)
 * [nvbw-osm-stop-comparison](https://github.com/mfdz/nvbw-osm-stop-comparison) – maps GTFS to OSM
