@@ -16,7 +16,7 @@ if [ "$USE_PTS_DB" = true ] ; then
     traines-source/public-transport-stats node ingest/stations/dump.js
 else
     echo "Downloading HAFAS station dataset..."
-    wget http://mirror.traines.eu/hafas-ibnr-zhv-gtfs-osm-matching/hafas-stations.ndjson -N -P ${DATA_DIR_STORE}
+    wget https://mirror.traines.eu/hafas-ibnr-zhv-gtfs-osm-matching/hafas-stations.ndjson -N -P ${DATA_DIR_STORE}
 fi
 
 echo "Matching stations... (This might take an hour or two)"
